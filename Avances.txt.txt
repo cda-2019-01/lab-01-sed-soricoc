@@ -1,0 +1,13 @@
+sed 's!/!-!g' data.csv > 1.out   # Cambia los '/' por '-'
+sed 's/-\([0-9]*\);/-20\1;/' 1.out > 2.out   # Agrega un 20 al inicio del año
+sed -r 's|(..)-(..)-(....)|\3-\2-\1|' 2.out > 3.out # Cambia el formato de DD-MM-YYYY a YYYY-MM-DD
+sed 's!;;!;\\N;!g' 3.out > 4.out # Reemplaza los vacíos por '/N'
+sed 's!;N!;\\N!g' 4.out > 5.out # En la segunda columna solo deben aparecer los valores A,B,C; hay algunas Ns que deben corresponder a nulos, se les agrega el '\'
+sed 's/,/./' 5.out > 6.out # Las ',' de los decimales pasan a '.'
+sed 's/;/./4' 6.out > 7.out # Hay un separador de decimal con ';', se convierte a '.'
+sed 's/;/,/g' 7.out > 8.out # Reemplaza ';' por ','
+sed 's/[a-c]/\U&/g' 8.out > 9.out  # Convierte la segunda columna a mayúsculas
+sed '/N/d' 9.out > 10.out   # Borra las líneas con nulos (la N sola indica nulo)??
+
+sed -e 's/,$/,HHHH/g' a.out > b.out El fin de línea ($) lo toma como principio??
+Extraiga los registros que no tienen campos nulos? Se quitan esos registros del archivo?
